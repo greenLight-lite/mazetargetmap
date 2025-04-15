@@ -4,24 +4,37 @@ enum ActionKind {
     Jumping
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.stairLadder, function (sprite, location) {
-	
+    mazeFloors.shift()
+    info.changeScoreBy(1)
+    game.splash("Floor " + info.score() + " complete!")
+    tiles.setCurrentTilemap(mazeFloors[0])
+    tiles.placeOnRandomTile(mySprite, sprites.dungeon.greenInnerSouthWest)
+    if (info.score() == 3) {
+        game.gameOver(true)
+    }
 })
 controller.A.onEvent(ControllerButtonEvent.Released, function () {
     controller.moveSprite(mySprite)
     walkingAnim()
 })
 function choosefloorNum (num: number) {
-    mazeFloors = [tilemap`level2`, tilemap`level3`, tilemap`level1`]
-    floorNumbers = [1, 2, 3]
     for (let mazeFloors = 0; mazeFloors <= 4; mazeFloors++) {
         realTilemap = 0
     }
     if (num == 1) {
-        tiles.setCurrentTilemap(mazeFloors[0])
-    } else if (num == 2) {
-        tiles.setCurrentTilemap(mazeFloors[1])
+        mazeFloors = [
+        tilemap`level3`,
+        tilemap`level1`,
+        tilemap`level2`,
+        tilemap`level5`
+        ]
     } else {
-        tiles.setCurrentTilemap(mazeFloors[1])
+        mazeFloors = [
+        tilemap`level1`,
+        tilemap`level3`,
+        tilemap`level2`,
+        tilemap`level6`
+        ]
     }
 }
 function walkingAnim () {
@@ -79,10 +92,10 @@ function walkingAnim () {
 }
 let anim: animation.Animation = null
 let realTilemap = 0
-let floorNumbers: number[] = []
-let mazeFloors: tiles.TileMapData[] = []
 let mySprite: Sprite = null
-choosefloorNum(game.askForNumber("pick a number 1-3", 1))
+let mazeFloors: tiles.TileMapData[] = []
+choosefloorNum(game.askForNumber("Welcome! Pick a number 1-3 to begin!", 1))
+tiles.setCurrentTilemap(mazeFloors[0])
 mySprite = sprites.create(img`
     e e e . . . . e e e . . . . 
     c d d c . . c d d c . . . . 
