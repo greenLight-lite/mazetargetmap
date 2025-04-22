@@ -28,11 +28,18 @@ function choosefloorNum (num: number) {
         tilemap`level2`,
         tilemap`level5`
         ]
-    } else {
+    } else if (num == 2) {
         mazeFloors = [
         tilemap`level1`,
         tilemap`level3`,
         tilemap`level2`,
+        tilemap`level6`
+        ]
+    } else {
+        mazeFloors = [
+        tilemap`level2`,
+        tilemap`level1`,
+        tilemap`level3`,
         tilemap`level6`
         ]
     }
